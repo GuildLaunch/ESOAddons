@@ -1,0 +1,9 @@
+## Title: Guild Launch Profiler
+## APIVersion: 100003
+## SavedVariables: GLP_SavedVariables
+
+
+main.lua
+libraries/Debug.lua
+components/Translation.lua
+components/Character.lua
