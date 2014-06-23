@@ -71,7 +71,6 @@ end
 function GLP.InitializeSavedVars()
 	-- Load saved variables
 	--GLP.vars = ZO_SavedVars:New( "GLPvars" , math.floor( GLP.version * 100 ) , nil , GLP.defaults , nil )
-
 	GLP.savedVars = {
         ["internal"]     		= ZO_SavedVars:New("GLP_SavedVariables", 1, "internal", { debug = GLP.debugDefault }),
         ["characterProfile"]    = ZO_SavedVars:New("GLP_SavedVariables", 2, "characterProfile", { profileVersion = GLP.profileVersion, lastUpdate = GetTimeStamp() }),
