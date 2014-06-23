@@ -36,6 +36,7 @@ function GLP.OnLoad( eventCode, addOnName )
 	EVENT_MANAGER:RegisterForEvent( "GLP" 	, EVENT_LEVEL_UPDATE  , GLP.HandleUpdate )
 	EVENT_MANAGER:RegisterForEvent( "GLP" 	, EVENT_INVENTORY_SINGLE_SLOT_UPDATE , GLP.HandleUpdate )
 	EVENT_MANAGER:RegisterForEvent( "GLP" 	, EVENT_SKILL_POINTS_CHANGED , GLP.HandleUpdate )
+	EVENT_MANAGER:RegisterForEvent( "GLP" 	, EVENT_GUILD_MEMBER_PLAYER_STATUS_CHANGED  , GLP.HandleUpdate )
 
 	-- Register the slash command handler
 	SLASH_COMMANDS[GLP.command] = GLPSlashCommands
@@ -50,20 +51,21 @@ function GLP.InitializeUI()
 
 	-- get the initial character profile
 	GLP.CollectCharacterData()
+	GLP.CollectGuildsData()
 end
 
 function GLP.HandleUpdate()
 	--if not GLP.BufferReached("GLPUpdateBuffer", 1) then return; end
 	-- update characetr data
 	GLP.CollectCharacterData(false)
-
-	--GLP.Debug( GLP.savedVars )
+	GLP.CollectGuildsData(false)
+	-- GLP.Debug( GLP.savedVars )
 end
 
 function GLP.HandleManualUpdate()
 	GLP.CollectCharacterData(true)
-
-	--GLP.Debug( GLP.savedVars )
+	GLP.CollectGuildsData(true)
+	-- GLP.Debug( GLP.savedVars )
 end
 
 function GLP.InitializeSavedVars()
@@ -73,6 +75,7 @@ function GLP.InitializeSavedVars()
 	GLP.savedVars = {
         ["internal"]     		= ZO_SavedVars:New("GLP_SavedVariables", 1, "internal", { debug = GLP.debugDefault }),
         ["characterProfile"]    = ZO_SavedVars:New("GLP_SavedVariables", 2, "characterProfile", { profileVersion = GLP.profileVersion, lastUpdate = GetTimeStamp() }),
+    	["guildProfile"]		= ZO_SavedVars:New("GLP_SavedVariables", 2, "guilds", {profileVersion = GLP.profileVersion, lastUpdate = GetTimeStamp()}),
     }
 
     if GLP.savedVars["internal"].debug == "1" then
